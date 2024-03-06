@@ -1,0 +1,32 @@
+type InsertSetResponse {
+  insertedId: String
+}
+
+input NewSet {
+  exercise: String!
+  reps: Int!
+  weight: Float
+}
+
+type Mutation {
+  insertSet(document: NewSet): InsertSetResponse
+    @rest(
+      method: POST
+      endpoint: "https://ap-southeast-2.aws.data.mongodb-api.com/app/data-toswo/endpoint/data/v1/action/insertOne"
+      headers: [
+        { name: "accept", value: "application/json" }
+        {
+          name: "apikey"
+          value: "dVd5lKigrPSfFGOFcAmydvtzDPxWAjWTw4lnlhrjw3IOwwEaoWahs8ZFsqO1sjgI"
+        }
+      ]
+         postbody: """
+      {
+        "collection": "sets",
+        "dataSource": "Cluster3",
+        "database": "workouts",
+        "document": "{{ .Get "document" }}"
+      }
+      """
+    )
+}

@@ -1,18 +1,32 @@
-type Exercise {
-  difficulty: String
-  equipment: String
-  instructions: String
-  muscle: String
-  name: String
-  type: String
+type DocumentsEntry {
+  _id: String
+  exercise: String
+  reps: Int
+  weight: Float
+}
+
+type Root {
+  documents: [DocumentsEntry]
 }
 
 type Query {
-  exercises(muscle: String, name: String): [Exercise]
+  sets: Root
     @rest(
-      endpoint: "https://api.api-ninjas.com/v1/exercises"
+      method: POST
+      endpoint: "https://ap-southeast-2.aws.data.mongodb-api.com/app/data-toswo/endpoint/data/v1/action/find"
       headers: [
-        { name: "x-api-key", value: "ehtHU9nzv0yA1OffeMXLew==lhBGKfOjX2efTe4J" }
+         { name: "accept", value: "application/json" }
+        {
+          name: "api-key"
+          value: "dVd5lKigrPSfFGOFcAmydvtzDPxWAjWTw4lnlhrjw3IOwwEaoWahs8ZFsqO1sjgI"
+        }
       ]
+      postbody: """
+      {
+        "collection": "sets",
+        "dataSource": "Cluster3",
+        "database": "workouts"
+      }
+      """
     )
 }
